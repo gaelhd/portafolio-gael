@@ -1,8 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
 @import "primeicons/primeicons.css";
-@import 'primeng/resources/themes/lara-light-indigo/theme.css';
-@import 'primeng/resources/primeng.min.css';
-@import './styles.scss';
 
 
 html, body {
