@@ -1,6 +1,7 @@
 import {
   EventBus,
   FilterMatchMode,
+  getKeyValue,
   isArray,
   isEmpty,
   isNotEmpty,
@@ -13,29 +14,36 @@ import {
   setAttribute,
   setAttributes,
   toKebabCase,
-  toTokenKey
-} from "./chunk-XEJ7Y63Z.js";
+  toTokenKey,
+  uuid
+} from "./chunk-UBK2ND2Q.js";
 import {
-  DOCUMENT
-} from "./chunk-V6YAFKAB.js";
+  DOCUMENT,
+  isPlatformServer
+} from "./chunk-XTKYUC2V.js";
 import {
+  ChangeDetectorRef,
+  Directive,
+  ElementRef,
   Injectable,
   InjectionToken,
+  Injector,
+  Input,
   PLATFORM_ID,
+  Renderer2,
   Subject,
+  __spreadValues,
   effect,
   inject,
-  makeEnvironmentProviders,
-  provideAppInitializer,
   setClassMetadata,
   signal,
   untracked,
+  ɵɵNgOnChangesFeature,
+  ɵɵProvidersFeature,
+  ɵɵdefineDirective,
   ɵɵdefineInjectable,
   ɵɵgetInheritedFactory
-} from "./chunk-PKUBQGYG.js";
-import {
-  __spreadValues
-} from "./chunk-WDMUDEB6.js";
+} from "./chunk-VO7UN46G.js";
 
 // node_modules/@primeuix/styled/index.mjs
 var __defProp = Object.defineProperty;
@@ -1457,28 +1465,230 @@ var PrimeNG = class _PrimeNG extends ThemeProvider {
   }], null, null);
 })();
 var PRIME_NG_CONFIG = new InjectionToken("PRIME_NG_CONFIG");
-function providePrimeNG(...features) {
-  const providers = features?.map((feature) => ({
-    provide: PRIME_NG_CONFIG,
-    useValue: feature,
-    multi: false
-  }));
-  const initializer = provideAppInitializer(() => {
-    const PrimeNGConfig = inject(PrimeNG);
-    features?.forEach((feature) => PrimeNGConfig.setConfig(feature));
-    return;
+
+// node_modules/primeng/fesm2022/primeng-basecomponent.mjs
+var BaseComponentStyle = class _BaseComponentStyle extends BaseStyle {
+  name = "common";
+  static ɵfac = /* @__PURE__ */ (() => {
+    let ɵBaseComponentStyle_BaseFactory;
+    return function BaseComponentStyle_Factory(__ngFactoryType__) {
+      return (ɵBaseComponentStyle_BaseFactory || (ɵBaseComponentStyle_BaseFactory = ɵɵgetInheritedFactory(_BaseComponentStyle)))(__ngFactoryType__ || _BaseComponentStyle);
+    };
+  })();
+  static ɵprov = ɵɵdefineInjectable({
+    token: _BaseComponentStyle,
+    factory: _BaseComponentStyle.ɵfac,
+    providedIn: "root"
   });
-  return makeEnvironmentProviders([...providers, initializer]);
-}
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(BaseComponentStyle, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], null, null);
+})();
+var BaseComponent = class _BaseComponent {
+  document = inject(DOCUMENT);
+  platformId = inject(PLATFORM_ID);
+  el = inject(ElementRef);
+  injector = inject(Injector);
+  cd = inject(ChangeDetectorRef);
+  renderer = inject(Renderer2);
+  config = inject(PrimeNG);
+  baseComponentStyle = inject(BaseComponentStyle);
+  baseStyle = inject(BaseStyle);
+  scopedStyleEl;
+  rootEl;
+  dt;
+  get styleOptions() {
+    return {
+      nonce: this.config?.csp().nonce
+    };
+  }
+  get _name() {
+    return this.constructor.name.replace(/^_/, "").toLowerCase();
+  }
+  get componentStyle() {
+    return this["_componentStyle"];
+  }
+  attrSelector = uuid("pc");
+  themeChangeListeners = [];
+  _getHostInstance(instance) {
+    if (instance) {
+      return instance ? this["hostName"] ? instance["name"] === this["hostName"] ? instance : this._getHostInstance(instance.parentInstance) : instance.parentInstance : void 0;
+    }
+  }
+  _getOptionValue(options, key = "", params = {}) {
+    return getKeyValue(options, key, params);
+  }
+  ngOnInit() {
+    if (this.document) {
+      this._loadStyles();
+    }
+  }
+  ngAfterViewInit() {
+    this.rootEl = this.el?.nativeElement;
+    if (this.rootEl) {
+      this.rootEl?.setAttribute(this.attrSelector, "");
+    }
+  }
+  ngOnChanges(changes) {
+    if (this.document && !isPlatformServer(this.platformId)) {
+      const {
+        dt: dt2
+      } = changes;
+      if (dt2 && dt2.currentValue) {
+        this._loadScopedThemeStyles(dt2.currentValue);
+        this._themeChangeListener(() => this._loadScopedThemeStyles(dt2.currentValue));
+      }
+    }
+  }
+  ngOnDestroy() {
+    this._unloadScopedThemeStyles();
+    this.themeChangeListeners.forEach((callback) => service_default.off("theme:change", callback));
+  }
+  _loadStyles() {
+    const _load = () => {
+      if (!base.isStyleNameLoaded("base")) {
+        this.baseStyle.loadGlobalCSS(this.styleOptions);
+        base.setLoadedStyleName("base");
+      }
+      this._loadThemeStyles();
+    };
+    _load();
+    this._themeChangeListener(() => _load());
+  }
+  _loadCoreStyles() {
+    if (!base.isStyleNameLoaded("base") && this._name) {
+      this.baseComponentStyle.loadCSS(this.styleOptions);
+      this.componentStyle && this.componentStyle?.loadCSS(this.styleOptions);
+      base.setLoadedStyleName(this.componentStyle?.name);
+    }
+  }
+  _loadThemeStyles() {
+    if (!config_default.isStyleNameLoaded("common")) {
+      const {
+        primitive,
+        semantic,
+        global,
+        style
+      } = this.componentStyle?.getCommonTheme?.() || {};
+      this.baseStyle.load(primitive?.css, __spreadValues({
+        name: "primitive-variables"
+      }, this.styleOptions));
+      this.baseStyle.load(semantic?.css, __spreadValues({
+        name: "semantic-variables"
+      }, this.styleOptions));
+      this.baseStyle.load(global?.css, __spreadValues({
+        name: "global-variables"
+      }, this.styleOptions));
+      this.baseStyle.loadGlobalTheme(__spreadValues({
+        name: "global-style"
+      }, this.styleOptions), style);
+      config_default.setLoadedStyleName("common");
+    }
+    if (!config_default.isStyleNameLoaded(this.componentStyle?.name) && this.componentStyle?.name) {
+      const {
+        css: css2,
+        style
+      } = this.componentStyle?.getComponentTheme?.() || {};
+      this.componentStyle?.load(css2, __spreadValues({
+        name: `${this.componentStyle?.name}-variables`
+      }, this.styleOptions));
+      this.componentStyle?.loadTheme(__spreadValues({
+        name: `${this.componentStyle?.name}-style`
+      }, this.styleOptions), style);
+      config_default.setLoadedStyleName(this.componentStyle?.name);
+    }
+    if (!config_default.isStyleNameLoaded("layer-order")) {
+      const layerOrder = this.componentStyle?.getLayerOrderThemeCSS?.();
+      this.baseStyle.load(layerOrder, __spreadValues({
+        name: "layer-order",
+        first: true
+      }, this.styleOptions));
+      config_default.setLoadedStyleName("layer-order");
+    }
+    if (this.dt) {
+      this._loadScopedThemeStyles(this.dt);
+      this._themeChangeListener(() => this._loadScopedThemeStyles(this.dt));
+    }
+  }
+  _loadScopedThemeStyles(preset) {
+    const {
+      css: css2
+    } = this.componentStyle?.getPresetTheme?.(preset, `[${this.attrSelector}]`) || {};
+    const scopedStyle = this.componentStyle?.load(css2, __spreadValues({
+      name: `${this.attrSelector}-${this.componentStyle?.name}`
+    }, this.styleOptions));
+    this.scopedStyleEl = scopedStyle?.el;
+  }
+  _unloadScopedThemeStyles() {
+    this.scopedStyleEl?.remove();
+  }
+  _themeChangeListener(callback = () => {
+  }) {
+    base.clearLoadedStyleNames();
+    service_default.on("theme:change", callback);
+    this.themeChangeListeners.push(callback);
+  }
+  cx(arg, rest) {
+    const classes = this.parent ? this.parent.componentStyle?.classes?.[arg] : this.componentStyle?.classes?.[arg];
+    if (typeof classes === "function") {
+      return classes({
+        instance: this
+      });
+    }
+    return typeof classes === "string" ? classes : arg;
+  }
+  sx(arg) {
+    const styles = this.componentStyle?.inlineStyles?.[arg];
+    if (typeof styles === "function") {
+      return styles({
+        instance: this
+      });
+    }
+    if (typeof styles === "string") {
+      return styles;
+    } else {
+      return __spreadValues({}, styles);
+    }
+  }
+  // cx(key = '', params = {}) {
+  //     const classes = this.parent ? this.parent.componentStyle?.classes : this.componentStyle?.classes;
+  //     return this._getOptionValue(classes({ instance: this._getHostInstance(this) }), key, { ...params });
+  // }
+  get parent() {
+    return this["parentInstance"];
+  }
+  static ɵfac = function BaseComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _BaseComponent)();
+  };
+  static ɵdir = ɵɵdefineDirective({
+    type: _BaseComponent,
+    inputs: {
+      dt: "dt"
+    },
+    features: [ɵɵProvidersFeature([BaseComponentStyle, BaseStyle]), ɵɵNgOnChangesFeature]
+  });
+};
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(BaseComponent, [{
+    type: Directive,
+    args: [{
+      standalone: true,
+      providers: [BaseComponentStyle, BaseStyle]
+    }]
+  }], null, {
+    dt: [{
+      type: Input
+    }]
+  });
+})();
 
 export {
-  service_default,
-  config_default,
-  base,
   BaseStyle,
-  ThemeProvider,
-  PrimeNG,
-  PRIME_NG_CONFIG,
-  providePrimeNG
+  BaseComponent
 };
-//# sourceMappingURL=chunk-MAGCHWD5.js.map
+//# sourceMappingURL=chunk-3QY4B3HS.js.map

@@ -27,7 +27,6 @@
               }
             ],
             "styles": [
-              "https://cdn.jsdelivr.net/npm/primeng/resources/themes/lara-light-indigo/theme.css",
               "https://cdn.jsdelivr.net/npm/primeng/resources/primeng.min.css",
               "src/styles.css"
             ],

@@ -1,13 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
 @import "primeicons/primeicons.css";
 
-
 html, body {
   font-family: "Onest", sans-serif;
   font-optical-sizing: auto;
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
+}
+
+body, .p-component {
+  font-family: "Onest", sans-serif !important;
 }
 
 :root {
