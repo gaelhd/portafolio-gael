@@ -1,0 +1,123 @@
+<div class="portfolio-container" [ngClass]="{'dark-theme': theme === 'dark'}">
+  <header class="header">
+    <div class="menu-container">
+      <p-button label="Experiencia" (onClick)="scrollToSection('experiencia')" [text]="true" styleClass="menu-button"></p-button>
+      <p-button label="Educación" (onClick)="scrollToSection('educacion')" [text]="true" styleClass="menu-button"></p-button>
+      <p-button label="Sobre mí" (onClick)="scrollToSection('sobremi')" [text]="true" styleClass="menu-button"></p-button>
+      <p-button
+        [icon]="theme === 'dark' ? 'pi pi-sun' : 'pi pi-moon'"
+        (onClick)="toggleDarkMode()"
+        [text]="true"
+        styleClass="theme-toggle"
+        [pTooltip]="theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
+        tooltipPosition="bottom"
+      ></p-button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="hero-section">
+      <div class="avatar-container">
+        <div class="avatar-wrapper">
+          <img src="https://media.licdn.com/dms/image/v2/D5603AQHdvca5ZwcTmw/profile-displayphoto-shrink_200_200/B56ZX4CQxzGsAY-/0/1743623098692?e=1751500800&v=beta&t=heQheB_8YSa2lk08AG62kulU0-RJEpDDUKcFfUGq7vI"
+               alt="Foto perfil"
+               class="profile-img" />
+        </div>
+
+        <div class="avatar-texts">
+          <h1 class="main-title">Hey, soy Gael</h1>
+          <p class="description">
+            <strong>Desarrollador de Software</strong> con más de 2 años de experiencia,
+            especializado en el desarrollo de aplicaciones tanto como
+            <strong>frontend y backend.</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="btnContact">
+        <p-button severity="primary" label="Contáctame" icon="pi pi-envelope" styleClass="p-button-rounded contact-button"></p-button>
+        <p-button severity="secondary" label="Currículum" icon="pi pi-file-pdf" styleClass="p-button-rounded resume-button"></p-button>
+      </div>
+    </section>
+
+    <section id="experiencia" class="experience-section section">
+      <div class="section-header">
+        <i class="pi pi-briefcase section-icon"></i>
+        <h2 class="section-title">Experiencia Laboral</h2>
+      </div>
+
+      <p-card styleClass="experience-card">
+        <ng-template pTemplate="header">
+          <div class="job-header">
+            <h3 class="empresa">Soinf TGV</h3>
+            <p-tag severity="info" value="Febrero 2023 – Actualidad" styleClass="duracion-tag"></p-tag>
+          </div>
+        </ng-template>
+        <h4 class="puesto">Desarrollador de software</h4>
+        <p class="desc">
+          Desarrollo y mantenimiento de sistemas, creación de servicios para
+          intercambio de datos, implementación de pruebas para asegurar calidad,
+          control de cambios en bases de datos y documentación técnica para
+          facilitar futuras actualizaciones.
+        </p>
+        <p-button label="Saber más >" [text]="true" icon="pi pi-arrow-right" iconPos="right"></p-button>
+      </p-card>
+
+      <p-card styleClass="experience-card">
+        <ng-template pTemplate="header">
+          <div class="job-header">
+            <h3 class="empresa">Freelance / Independiente</h3>
+            <p-tag severity="info" value="Marzo 2022 – Febrero 2023" styleClass="duracion-tag"></p-tag>
+          </div>
+        </ng-template>
+        <h4 class="puesto">Técnico de Servicio de Mantenimiento</h4>
+        <p class="desc">
+          Mantenimiento, reparación y optimización de equipos informáticos
+          para instituciones y particulares, asegurando su correcto
+          funcionamiento y mayor vida útil.
+        </p>
+      </p-card>
+    </section>
+
+    <section id="educacion" class="education-section section">
+      <div class="section-header">
+        <i class="pi pi-graduation-cap section-icon"></i>
+        <h2 class="section-title">Educación</h2>
+      </div>
+
+      <p-card styleClass="education-card">
+        <h3 class="institution">Instituto Tecnológico de Nuevo León</h3>
+        <h4 class="degree">Ingeniería en Sistemas Computacionales</h4>
+        <p-tag severity="info" value="2019 - 2024"></p-tag>
+      </p-card>
+    </section>
+
+    <section id="sobremi" class="about-section section">
+      <div class="section-header">
+        <i class="pi pi-user section-icon"></i>
+        <h2 class="section-title">Sobre mí</h2>
+      </div>
+
+      <p-card styleClass="about-card">
+        <p class="about-text">
+          Lo que me fascina del desarrollo de software es el desafío constante.
+          He adquirido habilidades mediante la experiencia trabajando en esta
+          industria tanto en tecnologías front como backend.
+        </p>
+        <p class="about-text">
+          El aprendizaje constante es mi filosofía. Cada nuevo problema es una
+          oportunidad para aprender algo nuevo. Así que si tienes un desafío,
+          estoy preparado para asumirlo.
+        </p>
+      </p-card>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; {{ 2025 }} - Desarrollado por Gael Flores</p>
+    <div class="social-links">
+      <a href="https://github.com/gaelhd"><i class="pi pi-github"></i></a>
+      <a href="https://www.linkedin.com/in/gaelhd/"><i class="pi pi-linkedin"></i></a>
+    </div>
+  </footer>
+</div>
