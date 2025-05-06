@@ -1,7 +1,8 @@
 <div class="portfolio-container" [ngClass]="{'dark-theme': theme === 'dark'}">
   <p-toast position="top-center"/>
-  <header class="header">
+  <header class="header" >
     <div class="menu-container">
+      <p-button label="Inicio" (onClick)="scrollToSection('inicio')" [text]="true" styleClass="menu-button"></p-button>
       <p-button label="Experiencia" (onClick)="scrollToSection('experiencia')" [text]="true" styleClass="menu-button"></p-button>
       <p-button label="Educación" (onClick)="scrollToSection('educacion')" [text]="true" styleClass="menu-button"></p-button>
       <p-button label="Sobre mí" (onClick)="scrollToSection('sobremi')" [text]="true" styleClass="menu-button"></p-button>
@@ -17,7 +18,7 @@
   </header>
 
   <main class="main-content">
-    <section class="hero-section">
+    <section id="inicio" class="hero-section">
       <div class="avatar-container">
         <div class="avatar-wrapper">
           <img src="https://media.licdn.com/dms/image/v2/D5603AQHdvca5ZwcTmw/profile-displayphoto-shrink_200_200/B56ZX4CQxzGsAY-/0/1743623098692?e=1751500800&v=beta&t=heQheB_8YSa2lk08AG62kulU0-RJEpDDUKcFfUGq7vI"

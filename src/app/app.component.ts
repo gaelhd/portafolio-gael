@@ -41,12 +41,24 @@ export class AppComponent implements OnInit {
     }
   }
 
+  // scrollToSection(sectionId: string) {
+  //   const element = document.getElementById(sectionId);
+  //   if (element) {
+  //     element.scrollIntoView({ behavior: 'smooth' });
+  //   }
+  // }
+
   scrollToSection(sectionId: string) {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+
+      window.scrollTo({
+        top: element.offsetTop - 60,
+        behavior: 'smooth'
+      });
     }
   }
+
 
   toggleDarkMode() {
     this.theme = this.theme === 'light' ? 'dark' : 'light';
