@@ -5,6 +5,8 @@ import { CardModule } from 'primeng/card';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
 import { RippleModule } from 'primeng/ripple';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -15,13 +17,18 @@ import { RippleModule } from 'primeng/ripple';
     CardModule,
     TagModule,
     TooltipModule,
-    RippleModule
+    RippleModule,
+    ToastModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [MessageService]
 })
 export class AppComponent implements OnInit {
+
+  constructor(private messageService: MessageService) {}
+
   theme: string = 'light';
 
   ngOnInit() {
@@ -61,4 +68,21 @@ export class AppComponent implements OnInit {
       document.body.classList.remove('dark-theme');
     }
   }
+
+  copiarTexto() {
+    const texto = 'ing.gael90@gmail.com';
+
+    navigator.clipboard.writeText(texto).then(() => {
+      this.messageService.add({ severity: 'info', summary: 'Correo copiado', life: 3000 });
+    }).catch(() => {
+      this.messageService.add({severity:'error', summary: 'Error', detail: 'No se pudo copiar el texto.',life: 3000});
+    });
+  }
+
+  openLink() {
+    window.open('https://drive.google.com/file/d/11MYpjLkBH_exRX5yf6NWs0Xnu2DOyqkt/view?usp=sharing', '_blank');
+  }
+
+
+
 }

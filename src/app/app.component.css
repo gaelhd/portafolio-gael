@@ -1,6 +1,14 @@
 :host {
+
   font-family: var(--font-family);
+  /* toast primeng */
+  --p-toast-info-border-color: #ffffff00;
+  --p-toast-close-icon-size: 0.5rem;
+  --p-toast-width: 11rem;
+  --p-toast-border-radius: 0.5rem;
+  --p-toast-content-padding: -1.5rem;
 }
+
 
 .portfolio-container {
   min-height: 100vh;
