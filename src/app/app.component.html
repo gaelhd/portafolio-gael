@@ -37,7 +37,7 @@
       </div>
 
       <div class="btnContact">
-        <p-button severity="success" label="Contáctame" icon="pi pi-envelope" styleClass="p-button-rounded contact-button" (click)="copiarTexto()"></p-button>
+        <p-button severity="success" label="Contáctame" icon="pi pi-envelope" styleClass="p-button-rounded contact-button" (click)="copiarTexto()" [pRipple]="false"></p-button>
         <p-button severity="secondary" label="Currículum" icon="pi pi-file-pdf" styleClass="p-button-rounded resume-button" (click)="openLink()"></p-button>
       </div>
     </section>
@@ -62,7 +62,7 @@
           control de cambios en bases de datos y documentación técnica para
           facilitar futuras actualizaciones.
         </p>
-        <p-button label="Saber más >" [text]="true" icon="pi pi-arrow-right" iconPos="right"></p-button>
+        <p-button label="Saber más" [text]="true" icon="pi pi-arrow-right" iconPos="right"></p-button>
       </p-card>
 
       <p-card styleClass="experience-card">
